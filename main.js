@@ -1,5 +1,5 @@
 var canvas, ctx, ALTURA = 600, LARGURA = 800, frames = 0, velocidade = 3,  difficulty = 0.0175, estadoAtual,
-record, img, img_mosquito, mosquito_entrou=5, score = 0, img_play,
+record, img, img_mosquito, mosquito_entrou=5, score = 0, img_play, audio_fundo, menu_fundo, pah, gameover,
 estados = {
   jogar: 0,
   jogando: 1,
@@ -27,8 +27,10 @@ mosquito = {
       var obs = this._obs[i];
       obs.x -= velocidade;
 
-      if (mosquito_entrou == 5)
+      if (mosquito_entrou == 5){
         estadoAtual = estados.perdeu;
+        gameover.play();
+      }
 
       else if(obs.x <= 185) {
         this._obs.splice(i, 1);
@@ -64,6 +66,7 @@ function clique(event) {
     for(var i = 0; i < mosquito._obs.length; i++){
       var mosq = mosquito._obs[i];
       if(x >= mosq.x && x <= mosq.x + mosq.largura && y >= mosq.y && y <= mosq.y + mosq.largura){
+          pah.play();
           mosquito._obs.splice(i, 1);
           score++;
           break;
@@ -110,6 +113,10 @@ function main() {
   coracao_vazio.src = "img/coracao_vazio.png";
   img_play = new Image();
   img_play.src = "img/play.png";
+  audio_fundo = document.getElementById('audio_fundo');
+  menu_fundo = document.getElementById('menu_fundo');
+  pah = document.getElementById('pah');
+  gameover = document.getElementById('gameover');
 
   roda();
 }
@@ -127,11 +134,21 @@ function atualiza() {
   if(score%10==0 && score != 0)
     velocidade +=  difficulty;
 
-  if (estadoAtual == estados.jogar)
+  if (estadoAtual == estados.jogar){
+    audio_fundo.pause();
+    menu_fundo.play();
     reset();
+  }
 
-  if (estadoAtual == estados.jogando)
+  else if (estadoAtual == estados.jogando){
+    audio_fundo.play();
+    menu_fundo.pause();
     mosquito.atualiza();
+  }
+
+  else if (estadoAtual == estados.perdeu) {
+    audio_fundo.pause();
+  }
 }
 
 function desenha() {
@@ -188,6 +205,7 @@ function myRandom(min, max) {
 function reset() {
   mosquito_entrou = 0;
   score = 0;
+  velocidade = 3;
   for(var i = 0; i < coracao.length; i++)
     coracao[i].vida = true;
 }
