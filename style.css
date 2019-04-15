@@ -1,0 +1,20 @@
+html {
+	cursor: url(img/mata_mosquito.png) 30 30, auto;
+}
+canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 10px;
+  -webkit-box-shadow: 2px 7px 33px 6px rgba(0,0,0,0.75);
+  -moz-box-shadow: 2px 7px 33px 6px rgba(0,0,0,0.75);
+  box-shadow: 2px 7px 33px 6px rgba(0,0,0,0.75);
+}
+body {
+  background: #f12711;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #f5af19, #f12711);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
